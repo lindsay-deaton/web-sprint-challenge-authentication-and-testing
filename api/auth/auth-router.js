@@ -2,9 +2,7 @@ const router = require('express').Router();
 const bcryptjs = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 
-const Jokes = require("../jokes/jokes-data.js")
 const Users = require("../users/users-model.js")
-const restrict = require("../middleware/restricted.js")
 const {isValid} = require("../users/users-service.js")
 
 
@@ -20,7 +18,7 @@ router.post("/register", (req, res) => {
 
     Users.add(credentials)
       .then(user => {
-        res.status(201).json({ data: user });
+        res.status(201).json({ data: user.username + hash });
       })
       .catch(error => {
         res.status(500).json({ message: "username taken" });
